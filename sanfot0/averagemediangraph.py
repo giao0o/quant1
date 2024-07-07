@@ -56,7 +56,7 @@ def visualize_statistics(stock_data, avg_max_increase, avg_max_decrease, median_
 
 def main():
     symbol = "002780"
-    start_date = "20240601"
+    start_date = "20240415"
     end_date = "20240630"
     
     stock_data = get_stock_data(symbol, start_date, end_date)
