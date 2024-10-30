@@ -75,9 +75,7 @@ def main():
                         print(f"盘中卖出 {buy_shares} 股，卖出价格 {sell_price}，现金余额 {cash}")
 
             elif open_return >= open_threshold_high:  # 早盘高开
-                sell_shares = int(buy_amount / open_price)
-                while sell_shares > shares_held - 1000 and sell_shares > 0:
-                    sell_shares -= 1
+                sell_shares = shares_held
                 if sell_shares > 0:
                     revenue = sell_shares * open_price * (1 - fee_rate - stamp_duty_rate)
                     cash += revenue
@@ -100,8 +98,9 @@ def main():
                             print(f"盘中买入 {buy_shares} 股，买入价格 {buy_price}，现金余额 {cash}")
 
             else:  # 早盘未低开未高开，进行盘中交易
-                intraday_return = (low_price - previous_close_price) / previous_close_price
-                if intraday_return <= stop_loss_threshold:  # 盘中跌幅超过阈值
+                intraday_return_low = (low_price - previous_close_price) / previous_close_price
+                intraday_return_high = (high_price - previous_close_price) / previous_close_price
+                if intraday_return_low <= stop_loss_threshold:  # 盘中跌幅超过阈值
                     buy_price = previous_close_price * (1 + stop_loss_threshold)
                     buy_shares = int(buy_amount / buy_price)
                     while cash < (buy_shares * buy_price) * (1 + fee_rate) and buy_shares > 0:
@@ -113,11 +112,9 @@ def main():
                         day_traded = True
                         print(f"盘中买入 {buy_shares} 股，买入价格 {buy_price}，现金余额 {cash}")
 
-                elif intraday_return >= intraday_threshold:  # 盘中涨幅超过阈值
+                elif intraday_return_high >= intraday_threshold:  # 盘中涨幅超过阈值
                     sell_price = (1 + intraday_threshold) * previous_close_price
-                    sell_shares = int(buy_amount / sell_price)
-                    while sell_shares > shares_held - 1000 and sell_shares > 0:
-                        sell_shares -= 1
+                    sell_shares = shares_held
                     if sell_shares > 0:
                         revenue = sell_shares * sell_price * (1 - fee_rate - stamp_duty_rate)
                         cash += revenue
