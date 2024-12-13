@@ -94,7 +94,7 @@ def execute_strategy(stock_data, initial_cash, shares_held, buy_amount, open_thr
 
 def main():
     symbol = "002780" #可修改 股票代码
-    start_date = "20240930" #可修改 起始日
+    start_date = "20160101" #可修改 起始日
     end_date = "20241030" #可修改 终止日
     initial_cash = 10000 #可修改 可用现金（用于先低买后高卖）
     shares_held = 1000 #可修改 可用来卖出的股票数量，现金和股价*股票数量大体得相等
