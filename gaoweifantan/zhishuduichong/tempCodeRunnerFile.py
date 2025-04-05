@@ -1,0 +1,1 @@
+and signal < sig:  # 持仓，尾盘卖出
